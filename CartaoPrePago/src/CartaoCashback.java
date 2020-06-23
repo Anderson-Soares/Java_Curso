@@ -8,13 +8,13 @@ public class CartaoCashback extends CartaoPrePago {
 		this.tipoDeCartao = tipoDeCartao;
 	}
 
-	protected boolean comprar(double valor) {
+	protected void comprar(double valor) {
 		if (this.saldo >= valor) {
 			if (tipoDeCartao.equals("gold")) {
 				this.saldo = super.saldo + (valor*0.08) - valor;
 				System.out.println("Compra realizada com sucesso! Valor da compra: " + valor + " reais");
-				
-				return true; }
+			}
+				//return true; }
 			else if ( tipoDeCartao.equals("silver")) {
 				this.saldo = super.saldo + (valor*0.05) - valor;
 				System.out.println("Compra realizada com sucesso! Valor da compra: " + valor + " reais");
@@ -26,9 +26,11 @@ public class CartaoCashback extends CartaoPrePago {
 				return true;
 			}
 			
-		} 
-		System.out.println("Saldo insuficiente");
-		return false;
+		} else {
+			throw new CardException("Saldo inferior ao valor da compra.");
+		}
+		//System.out.println("Saldo insuficiente");
+		//return false;
 	}
 	
 	@Override

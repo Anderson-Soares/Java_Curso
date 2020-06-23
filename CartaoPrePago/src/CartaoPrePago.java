@@ -56,17 +56,23 @@ public class CartaoPrePago {
 	}
 	
 	protected void adicionarCredito(double valor) {
+		if (valor < 0) {
+			throw new CardException("Nao e possivel adicionar valor negativo");
+		}
 		this.saldo = this.saldo + valor;
-	}
+		}
+
 	
 	protected boolean comprar(double valor) {
 		if (this.saldo >= valor) {
 			this.saldo = this.saldo - valor;
 			System.out.println("Compra realizada com sucesso! Valor da compra: " + valor + " reais");
 			return true;
-		} 
-		System.out.println("Saldo insuficiente");
-		return false;
+		} else {
+		throw new CardException("Não dá pra comprar pq nao tem saldo.");
+		//System.out.println("Saldo insuficiente");
+		//return false;
+		}
 	}
 	
 	@Override
